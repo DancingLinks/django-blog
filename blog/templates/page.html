@@ -11,7 +11,7 @@
     <link rel="icon" href="{% static 'picture/14.ico' %}">
     <title>PrIce's Server</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"><!--定义与外部资源的关系-->
-    <script src="js/jquery.min.js"></script><!--定义客户端脚本 -->
+    <script src="{% static 'js/jquery.min.js' %}"></script><!--定义客户端脚本 -->
 </head>
 
 <body>
@@ -23,7 +23,7 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="../index">Home</a></li>
+                    <li><a href="../write_new_page">Write</a></li>
                     <li><a href="../about">About</a></li>
                     <li><a href="../contact">Contact</a></li>
                 </ul>
@@ -58,9 +58,9 @@
 
         </div><!-- /.row -->
 
-        <p><br /><br /><br /><br /><br /></p>
+        <p><br /><br /><hr></p>
 
-        <p class="blog-post-title"><h2>Oppotion</h2></p>
+        <p class="blog-post-title"><h2>Delete</h2></p>
         <form action="../delete_one_page" method="post">
             <input type="hidden" name="id" value={{ page.id }}>
             Password：<input type="password" name="password">  <br />
@@ -68,17 +68,18 @@
             <input type="reset" value="Reset" />
         </form>
 
-        <p><br /><br /><br /></p>
+        <p><br /><br /><hr></p>
 
         <p class="blog-post-title"><h2>Comment</h2></p>
 
-        <form action="../add_new_comment" method="post">
-            <input type="hidden" name="id" value={{ page.id }}>
-            Dickname：<input type="text" name="name">  <br />
-            <textarea type="text" name="content" row="400" cols="120"></textarea>
+        <form>
+            <input type="hidden" id="id" value={{ page.id }}>
+            Dickname：<input type="text" id="name">  <br />
+            <textarea type="text" id="content" rows="10" style="width: 100%;"></textarea>
             <p></p>
             <input type="submit" value="Submit" />
             <input type="reset" value="Reset" />
+            <input type="button" class="btn btn-primary btn-shadow" value="Submit" onclick="PostNewPage()"/>
         </form>
 
         {% for comment in comment_list reversed %}
@@ -101,15 +102,41 @@
     <p><br /><br /><br /><br /><br /></p>
 
     <div class="container">
-    <div class="blog-footer">
-        <p align="center">Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="http://user.qzone.qq.com/348368689/infocenter?ptsig=DyCxY-Vd9sdjnqMirpgyW-BGRW-KU375TqO*e*-ytuQ_">@PrIce</a>.</p>
-        <p align="center">
-            <a href="../index">Back to top</a>
-        </p>
-
+        <div class="blog-footer">
+            <p align="center">Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="http://user.qzone.qq.com/348368689/infocenter?ptsig=DyCxY-Vd9sdjnqMirpgyW-BGRW-KU375TqO*e*-ytuQ_">@PrIce</a>.</p>
+            <p align="center">
+                <a href="../index">Back to top</a>
+            </p>
+        </div>
     </div>
 
-</div>
+    <script>
+        function PostNewPage() {
+
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var content = document.getElementById("content").value;
+
+            if(content=="") {
+
+                alert("评论内容不能为空！");
+            }else {
+
+                $.post(
+                        "../add_new_comment",
+                        {"id":id, "name":name, "content":content},
+                        function(result) {
+
+                            if(result.result){
+
+                                alert("评论成功！");
+                                window.location.reload();
+                            }
+                        }
+                );
+            }
+        }
+    </script>
 
 </body>
 </html>

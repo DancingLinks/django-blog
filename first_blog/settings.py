@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fh)h9!h_3wxv2d$kvo6^3l%mdlt3&3p)za8-l+8l9l-%e_#j1#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -62,6 +62,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -71,6 +72,7 @@ TEMPLATES = [
 
 TEMPLATES_DIRS = (
     'first_blog/blog/templates',
+    'first_blog/login/templates',
 )
 
 WSGI_APPLICATION = 'first_blog.wsgi.application'

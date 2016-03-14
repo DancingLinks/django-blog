@@ -3,7 +3,7 @@
 from django.template.loader import get_template
 from django.template import Context
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 import datetime
 import cgi, cgitb
 from django.template.context_processors import csrf
@@ -89,7 +89,7 @@ def write_new_page(request):
 @csrf_exempt
 def add_new_page(request):
     password = str(request.POST['password'])
-    if password == 'qianyu':
+    if password == 'hahahaha123':
         title = str(request.POST['title'])
         if title == '':
             title = "无标题"
@@ -103,15 +103,22 @@ def add_new_page(request):
 
 @csrf_exempt
 def add_new_comment(request):
+    content = str(request.POST['content'])
+    if content == '':
+        return JsonResponse({"resule":False});
     page_id = str(request.POST['id'])
     name = str(request.POST['name'])
     if name == '':
         name = "匿名用户"
-    content = str(request.POST['content'])
+    t = Comment.objects.filter(comment_name=name, comment_content=content)
+    if(name=="Hjyheart"):
+        return JsonResponse({'result', "傻鸡我让你爬"})
+    if(len(t)>1):
+        return JsonResponse({'result', "傻鸡我让你爬"})
     page = Page.objects.get(id=page_id)
     comment = Comment.objects.create(comment_name=name, comment_content=content, comment_page=page)
     comment.save()
-    return HttpResponseRedirect('/page/?id=' + str(page_id))
+    return JsonResponse({"result":True})
 
 
 def delete_all_page(request):

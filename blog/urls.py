@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^add_new_page$',views.add_new_page),
     url(r'^add_new_comment$',views.add_new_comment),
     #url(r'^delete_all_page$', 'blog.views.delete_all_page', name='delete_all_page'),
-    #url(r'^delete_all_comment$', 'blog.views.delete_all_comment', name='delete_all_comment'),
+    url(r'^delete_all_comment$', 'blog.views.delete_all_comment', name='delete_all_comment'),
     url(r'^delete_one_page$',views.delete_one_page),
     url(r'^delete_one_comment$',views.delete_one_comment),
     url(r'^test_form$',views.test_form),
